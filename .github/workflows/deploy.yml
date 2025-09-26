@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Check if framework project
+        id: check-project-type
+        run: |
+          if [ -f "package.json" ]; then
+            echo "is-framework=true" >> $GITHUB_OUTPUT
+            # Check for common build output directories
+            if [ -f "package.json" ]; then
+              SCRIPTS=$(cat package.json | grep -o '"build"[^}]*' || echo "")
+              if [[ $SCRIPTS == *"dist"* ]]; then
+                echo "build-dir=dist" >> $GITHUB_OUTPUT
+              elif [[ $SCRIPTS == *"build"* ]] || [ -d "build" ]; then
+                echo "build-dir=build" >> $GITHUB_OUTPUT
+              else
+                echo "build-dir=dist" >> $GITHUB_OUTPUT
+              fi
+            fi
+          else
+            echo "is-framework=false" >> $GITHUB_OUTPUT
+            echo "build-dir=." >> $GITHUB_OUTPUT
+          fi
+
+      - name: Setup Node.js
+        if: steps.check-project-type.outputs.is-framework == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        if: steps.check-project-type.outputs.is-framework == 'true'
+        run: npm install
+
+      - name: Build project
+        if: steps.check-project-type.outputs.is-framework == 'true'
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ${{ steps.check-project-type.outputs.build-dir }}
