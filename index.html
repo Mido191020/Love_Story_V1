@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mido & Malak's Love Story</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .hero-bg {
+            background-image: url('resources/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #E8A598, #F4C2C2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(244, 194, 194, 0.3);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(244, 194, 194, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #E8A598, #F4C2C2);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(232, 165, 152, 0.4);
+        }
+
+        /* Button styles */
+        .btn,
+        button,
+        .cta-button,
+        input[type="submit"] {
+            background: linear-gradient(45deg, #D4A574, #B8956A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            min-height: 44px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover,
+        button:hover,
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+            opacity: 0.9;
+        }
+
+        .btn:active,
+        button:active,
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Mobile menu behavior */
+        .nav-menu.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                margin: 15px 10px;
+                padding: 20px 15px;
+            }
+
+            .hero-title,
+            h1 {
+                font-size: 2.5rem !important;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            button,
+            .btn,
+            .cta-button {
+                min-height: 44px;
+                width: 100%;
+                margin: 10px 0;
+                font-size: 16px;
+                padding: 15px 20px;
+            }
+
+            p,
+            .story-text {
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 0 15px;
+            }
+
+            .timeline {
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-pink-50 to-cream-100 font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <h1 class="text-2xl font-bold text-gradient" style="font-family: 'Playfair Display', serif;">💕
+                        LoveStory</h1>
+                </div>
+                <div class="hidden md:block nav-menu">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html"
+                            class="text-pink-600 hover:text-pink-800 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="create.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Create
+                            Story</a>
+                        <a href="browse.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Browse</a>
+                        <a href="about.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">About</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-gray-700 hover:text-pink-600 mobile-menu-btn">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center relative pt-16">
+        <div class="floating-hearts">
+            <div class="heart text-2xl" style="left: 10%; animation-delay: 0s;">💕</div>
+            <div class="heart text-xl" style="left: 20%; animation-delay: 1s;">💖</div>
+            <div class="heart text-lg" style="left: 70%; animation-delay: 2s;">💗</div>
+            <div class="heart text-xl" style="left: 80%; animation-delay: 3s;">💝</div>
+            <div class="heart text-sm" style="left: 60%; animation-delay: 4s;">💓</div>
+        </div>
+
+        <div class="text-center z-10 px-4 sm:px-6 lg:px-8">
+            <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 sm:p-12 lg:p-16 shadow-2xl max-w-4xl mx-auto">
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-800 mb-6 hero-title"
+                    style="font-family: 'Playfair Display', serif;">Mido & Malak's Love Story</h1>
+                <p class="text-lg sm:text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">Every love story is
+                    unique, but ours feels like magic...</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="create.html"
+                        class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+                        Create Your Story ✨
+                    </a>
+                    <button class="text-pink-600 hover:text-pink-800 font-semibold text-lg transition-colors"
+                        onclick="previewStory()">
+                        See Example Story →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Example Story Preview -->
+    <section class="py-20 bg-gradient-to-b from-pink-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4"
+                    style="font-family: 'Playfair Display', serif;">
+                    A Love Story Like No Other
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    See how beautiful your story can be with our elegant timeline format
+                </p>
+            </div>
+
+            <div class="card-hover bg-white rounded-3xl shadow-xl overflow-hidden max-w-4xl mx-auto">
+                <div class="md:flex">
+                    <div class="md:w-1/2">
+                        <img src="resources/couple-preview.jpg" alt="Love Story Preview"
+                            class="w-full h-64 md:h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <div class="flex items-center mb-4">
+                            <span class="text-2xl mr-2">💕</span>
+                            <h3 class="text-2xl font-bold text-gray-800"
+                                style="font-family: 'Playfair Display', serif;">Mido & Malak</h3>
+                        </div>
+                        <p class="text-gray-600 mb-4">Together since 2019</p>
+                        <p class="text-gray-700 mb-6 leading-relaxed">
+                            "From our first coffee date to saying 'I do', every moment has been magical. This is our
+                            journey of love, laughter, and forever."
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span>📸 24 photos</span>
+                                <span>💬 12 stories</span>
+                                <span>💖 127 hearts</span>
+                            </div>
+                            <button class="text-pink-600 hover:text-pink-800 font-semibold transition-colors"
+                                onclick="viewStory()">
+                                View Full Story →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4"
+                    style="font-family: 'Playfair Display', serif;">
+                    Why Choose LoveStory?
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Everything you need to create and share your beautiful love story
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl text-white">📸</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Beautiful Timeline</h3>
+                    <p class="text-gray-600">Organize your photos and stories in an elegant, chronological timeline that
+                        tells your unique love story.</p>
+                </div>
+
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl text-white">✨</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Easy Sharing</h3>
+                    <p class="text-gray-600">Share your love story with a unique, beautiful link that you can send to
+                        friends and family anywhere.</p>
+                </div>
+
+                <div class="text-center p-6">
+                    <div
+                        class="w-16 h-16 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl text-white">💕</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Forever Yours</h3>
+                    <p class="text-gray-600">Your love story is preserved forever in a beautiful, lasting digital format
+                        that you can revisit anytime.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-pink-100 to-pink-200">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl sm:text-4xl font-bold text-gray-800 mb-4"
+                style="font-family: 'Playfair Display', serif;">
+                Ready to Share Your Love Story?
+            </h2>
+            <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
+                Join thousands of couples who have already created their beautiful love stories. Start yours today!
+            </p>
+            <a href="create.html"
+                class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-block">
+                Start Creating Your Story ✨
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 border-t border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold text-gradient mb-2" style="font-family: 'Playfair Display', serif;">💕
+                    LoveStory</h3>
+                <p class="text-gray-600 text-sm">© 2024 LoveStory. Made with 💕 for couples everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

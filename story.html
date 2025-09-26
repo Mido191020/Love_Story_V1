@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mido & Malak's Love Story - LoveStory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&family=Dancing+Script:wght@400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        .timeline-bg {
+            background-image: url('resources/timeline-bg.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        .story-item {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .story-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        .story-item:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .heart-animation {
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .floating-flower {
+            position: absolute;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(180deg);
+            }
+        }
+
+        .share-popup {
+            transform: scale(0.8);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .share-popup.show {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* Button styles */
+        .btn,
+        button,
+        .cta-button,
+        input[type="submit"] {
+            background: linear-gradient(45deg, #D4A574, #B8956A);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.3);
+            min-height: 44px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn:hover,
+        button:hover,
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.4);
+            opacity: 0.9;
+        }
+
+        .btn:active,
+        button:active,
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item {
+                margin: 15px 10px;
+                padding: 20px 15px;
+            }
+
+            .hero-title,
+            h1 {
+                font-size: 2.5rem !important;
+                margin: 0 20px;
+                text-align: center;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            button,
+            .btn,
+            .cta-button {
+                min-height: 44px;
+                width: 100%;
+                margin: 10px 0;
+                font-size: 16px;
+                padding: 15px 20px;
+            }
+
+            p,
+            .story-text {
+                font-size: 16px;
+                line-height: 1.5;
+                margin: 0 15px;
+            }
+
+            .timeline {
+                padding: 20px 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-br from-pink-50 to-cream-100 font-sans">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html"
+                        class="text-2xl font-bold bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent"
+                        style="font-family: 'Playfair Display', serif;">💕 LoveStory</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="create.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Create
+                            Story</a>
+                        <a href="browse.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Browse</a>
+                        <a href="about.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">About</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-pink-600 hover:text-pink-800 transition-colors" onclick="toggleShare()">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                                d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+                        </svg>
+                    </button>
+                    <button class="text-pink-600 hover:text-pink-800 transition-colors heart-animation"
+                        onclick="loveStory()">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Story Header -->
+    <section class="pt-20 pb-12 bg-gradient-to-b from-pink-100 to-white relative overflow-hidden">
+        <div class="floating-flower text-2xl" style="left: 10%; top: 20%; animation-delay: 0s;">🌸</div>
+        <div class="floating-flower text-xl" style="left: 80%; top: 30%; animation-delay: 2s;">🌺</div>
+        <div class="floating-flower text-lg" style="left: 60%; top: 15%; animation-delay: 4s;">🌷</div>
+
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="inline-flex items-center bg-white/80 backdrop-blur-sm rounded-full px-6 py-2 mb-6 shadow-lg">
+                <span class="text-2xl mr-2">💕</span>
+                <span class="text-sm font-medium text-gray-700">LoveStory since 2019</span>
+            </div>
+
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800 mb-4"
+                style="font-family: 'Playfair Display', serif;">
+                Mido & Malak
+            </h1>
+            <p class="text-xl text-gray-600 mb-6" style="font-family: 'Dancing Script', cursive;">
+                "A journey of love, laughter, and forever"
+            </p>
+
+            <div class="flex flex-wrap justify-center items-center gap-6 text-sm text-gray-600">
+                <div class="flex items-center">
+                    <span class="mr-2">📅</span>
+                    <span>Together since March 15, 2019</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-2">📸</span>
+                    <span>24 memories shared</span>
+                </div>
+                <div class="flex items-center">
+                    <span class="mr-2">💖</span>
+                    <span>127 hearts received</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="timeline-bg py-16">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4" style="font-family: 'Playfair Display', serif;">
+                    Our Love Timeline
+                </h2>
+                <p class="text-gray-600">Every moment, every memory, every milestone</p>
+            </div>
+
+            <div class="space-y-12">
+                <!-- Timeline Item 1 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">Mar 2019</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="First Date"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">Our First Coffee Date ☕</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Little did we know that this simple coffee date at the corner café would be the
+                                beginning of our beautiful journey together. The conversation flowed for hours, and we
+                                both knew something special was starting.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">Jun 2019</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="First Trip"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">Our First Weekend Getaway 🏖️</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                A spontaneous trip to the coast that solidified our bond. Walking hand in hand along the
+                                beach, watching sunsets, and realizing we had found something truly special in each
+                                other.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 3 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">Dec 2019</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="First Christmas"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">Our First Christmas Together 🎄</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Decorating the tree, exchanging gifts, and creating our own holiday traditions. It was
+                                magical to spend this special time together and realize we were building our own little
+                                world.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">May 2020</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="Moving In"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">Moving In Together 🏠</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Taking the next big step in our relationship. Building our first home together, filled
+                                with love, laughter, and dreams of the future. Every corner holds memories of our
+                                journey.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">Sep 2021</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="Engagement"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">The Proposal 💍</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                Under the stars at our favorite spot, with tears of joy and hearts full of love. The
+                                moment we decided to spend the rest of our lives together. The answer was always yes!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 6 -->
+                <div class="story-item flex items-center">
+                    <div class="flex-shrink-0 w-24 text-right pr-8">
+                        <div class="text-sm font-semibold text-pink-600">Jun 2022</div>
+                    </div>
+                    <div class="flex-shrink-0 w-4 h-4 bg-pink-500 rounded-full border-4 border-white shadow-lg"></div>
+                    <div class="flex-grow ml-8">
+                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-6 shadow-xl border border-pink-100">
+                            <img src="resources/couple-preview.jpg" alt="Wedding"
+                                class="w-full h-48 object-cover rounded-xl mb-4">
+                            <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                style="font-family: 'Playfair Display', serif;">Our Wedding Day 👰🤵</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                The most beautiful day of our lives, surrounded by family and friends. Two hearts
+                                becoming one, promising forever to each other. The beginning of our happily ever after.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Share & Comments Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Share Story -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6" style="font-family: 'Playfair Display', serif;">
+                        Share This Love Story
+                    </h3>
+                    <p class="text-gray-600 mb-6">
+                        Spread the love by sharing Mido & Malak's beautiful journey with others.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-center space-x-3">
+                            <input type="text" value="lovestory.com/mido-malak" readonly
+                                class="flex-1 px-4 py-3 bg-gray-100 rounded-lg text-gray-700">
+                            <button
+                                class="px-6 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors"
+                                onclick="copyLink()">
+                                Copy
+                            </button>
+                        </div>
+                        <div class="flex space-x-3">
+                            <button
+                                class="flex-1 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors">Share
+                                on Facebook</button>
+                            <button
+                                class="flex-1 py-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">Share
+                                on Twitter</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Well Wishes -->
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6" style="font-family: 'Playfair Display', serif;">
+                        Send Your Wishes 💕
+                    </h3>
+                    <div class="space-y-4">
+                        <textarea placeholder="Write a beautiful message for the happy couple..."
+                            class="w-full px-4 py-3 border border-pink-200 rounded-lg focus:border-pink-400 focus:ring-2 focus:ring-pink-200 outline-none transition-all"
+                            rows="4"></textarea>
+                        <button
+                            class="w-full py-3 bg-gradient-to-r from-pink-400 to-pink-600 text-white rounded-lg font-semibold hover:shadow-lg transition-all"
+                            onclick="sendWish()">
+                            Send Love & Wishes 💕
+                        </button>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <div class="bg-pink-50 rounded-lg p-4">
+                            <p class="text-gray-700">"Congratulations! Your love story is truly inspiring! 💕"</p>
+                            <p class="text-sm text-gray-500 mt-2">- Emma & James</p>
+                        </div>
+                        <div class="bg-pink-50 rounded-lg p-4">
+                            <p class="text-gray-700">"Wishing you both a lifetime of happiness together! 🌟"</p>
+                            <p class="text-sm text-gray-500 mt-2">- Lisa & David</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Stories -->
+    <section class="py-16 bg-gradient-to-b from-pink-50 to-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4" style="font-family: 'Playfair Display', serif;">
+                    More Beautiful Love Stories
+                </h2>
+                <p class="text-gray-600">Discover other inspiring love journeys</p>
+            </div>
+
+            <div class="splide" id="related-stories">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mx-2">
+                                <img src="resources/couple-preview.jpg" alt="Love Story"
+                                    class="w-full h-48 object-cover">
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                        style="font-family: 'Playfair Display', serif;">Emma & James</h3>
+                                    <p class="text-gray-600 text-sm mb-4">"High school sweethearts who found their way
+                                        back to each other"</p>
+                                    <button class="text-pink-600 hover:text-pink-800 font-semibold">Read Story
+                                        →</button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mx-2">
+                                <img src="resources/couple-preview.jpg" alt="Love Story"
+                                    class="w-full h-48 object-cover">
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                        style="font-family: 'Playfair Display', serif;">Lisa & David</h3>
+                                    <p class="text-gray-600 text-sm mb-4">"A chance encounter that turned into forever"
+                                    </p>
+                                    <button class="text-pink-600 hover:text-pink-800 font-semibold">Read Story
+                                        →</button>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="splide__slide">
+                            <div class="bg-white rounded-2xl shadow-lg overflow-hidden mx-2">
+                                <img src="resources/couple-preview.jpg" alt="Love Story"
+                                    class="w-full h-48 object-cover">
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2"
+                                        style="font-family: 'Playfair Display', serif;">Anna & Mark</h3>
+                                    <p class="text-gray-600 text-sm mb-4">"From coworkers to soulmates"</p>
+                                    <button class="text-pink-600 hover:text-pink-800 font-semibold">Read Story
+                                        →</button>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-8 border-t border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent mb-2"
+                    style="font-family: 'Playfair Display', serif;">💕 LoveStory</h3>
+                <p class="text-gray-600 text-sm">© 2024 LoveStory. Made with 💕 for couples everywhere.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
