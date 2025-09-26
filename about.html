@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Love Story Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-pink-50 to-cream-100 font-sans">
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50 border-b border-pink-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html"
+                        class="text-2xl font-bold bg-gradient-to-r from-pink-400 to-pink-600 bg-clip-text text-transparent"
+                        style="font-family: 'Playfair Display', serif;">💕 LoveStory</a>
+                </div>
+                <div class="hidden md:block nav-menu">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="index.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Home</a>
+                        <a href="create.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Create
+                            Story</a>
+                        <a href="browse.html"
+                            class="text-gray-700 hover:text-pink-600 px-3 py-2 text-sm font-medium transition-colors">Browse</a>
+                        <a href="about.html" class="text-pink-600 px-3 py-2 text-sm font-medium">About</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-gray-700 hover:text-pink-600 mobile-menu-btn">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <header class="py-12 text-center">
+            <h1 class="text-4xl font-bold text-gray-800" style="font-family: 'Playfair Display', serif;">About Our
+                Platform</h1>
+            <p class="text-gray-600 mt-2">Every love story deserves to be beautifully told and preserved forever</p>
+        </header>
+
+        <section class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold mb-2">📖 Tell Your Story</h3>
+                    <p class="text-gray-600">Create a beautiful timeline of your relationship milestones with photos and
+                        memories</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold mb-2">📱 Mobile Friendly</h3>
+                    <p class="text-gray-600">Your love story looks perfect on any device - phone, tablet, or desktop</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold mb-2">🎨 Beautiful Design</h3>
+                    <p class="text-gray-600">Professional, elegant templates that make your story shine</p>
+                </div>
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-semibold mb-2">💝 Easy Sharing</h3>
+                    <p class="text-gray-600">Share your love story with family and friends with a simple link</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4" style="font-family: 'Playfair Display', serif;">Ready
+                    to Create Your Love Story?</h2>
+                <a href="create.html"
+                    class="btn-primary text-white px-8 py-4 rounded-full text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 inline-block">Get
+                    Started</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="main.js"></script>
+    <script>
+        // minimal btn-primary if index styles not loaded
+        const style = document.createElement('style');
+        style.textContent = `.btn-primary{background:linear-gradient(135deg,#E8A598,#F4C2C2);transition:.3s}`;
+        document.head.appendChild(style);
+    </script>
+</body>
+
+</html>
